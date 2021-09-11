@@ -10,15 +10,10 @@ package GhulamJmartAK;
 
 public class Jmart
 {
-    public float getDiscountedPrice(float price, float discountPercentage) {
-            float newPrice;
-            if(discountPercentage > 100.0f) {
-                return 0;
-            }
-            else {
-                newPrice = price * (discountPercentage /100 );
-                return newPrice;
-            }
+    public static void main (String[] args) {
+        System.out.println(getDiscountPercentage(1000, 900));
+        System.out.println(getDiscountedPrice(90000, getDiscountPercentage(1000, 900)));
+        
         }
     
     public static int getPromo() {
@@ -26,23 +21,26 @@ public class Jmart
         }
         
     public static String getCustomer() {
-            return "oop";
-        }
+        return "oop";
+    }
         
     public static float getDiscountPercentage(int before, int after) {
-        if(before<after) {
-                return before;
+            if(before<after) {
+                return 0;
+            }
+            else {
+                return (before-after)/10;
+            }
         }
-        else {
-                return 0.0f;
+    
+    public static int getDiscountedPrice(int price, float discountPercentage) {
+            int newPrice;
+            if(discountPercentage > 100.0f) {
+                return 0;
+            }
+            else {
+                newPrice = (int)((float)price * (discountPercentage /100 ));
+                return newPrice;
+            }
         }
-    }
-    
-    
-    public static void main (String[] args) {
-        
-        
-        }
-        
-    
 }
