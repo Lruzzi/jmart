@@ -10,7 +10,7 @@ package GhulamJmartAK;
 
 public class Jmart
 {
-    public int getDiscountedPrice(int price, float discountPercentage) {
+    public float getDiscountedPrice(float price, float discountPercentage) {
             float newPrice;
             if(discountPercentage > 100.0f) {
                 return 0;
