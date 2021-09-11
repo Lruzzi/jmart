@@ -11,11 +11,11 @@ package GhulamJmartAK;
 public class Jmart
 {
     public static void main (String[] args) {
-        System.out.println(getDiscountPercentage(1000, 900));
+        System.out.println(getDiscountPercentage(900, 800));
         System.out.println(getDiscountedPrice(90000, 10.0f));
         System.out.println(getOriginalPrice(0, 120.0f));
-        System.out.println(getAdjustedPrice(1000));
-        System.out.println(getAdminFee(1000));
+        System.out.println(getAdjustedPrice(500));
+        System.out.println(getAdminFee(500));
     }
     
     public static int getPromo() {
@@ -31,7 +31,7 @@ public class Jmart
             return 0;
         }
         else {
-            return (before-after)/10;
+                return (((float)(before)-(float)(after))/(float)(before))*100;
         }
     }
     
