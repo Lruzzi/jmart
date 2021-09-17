@@ -11,11 +11,7 @@ package GhulamJmartAK;
 public class Jmart
 {
     public static void main (String[] args) {
-        System.out.println(getDiscountPercentage(900, 800));
-        System.out.println(getDiscountedPrice(90000, 10.0f));
-        System.out.println(getOriginalPrice(0, 120.0f));
-        System.out.println(getAdjustedPrice(500));
-        System.out.println(getAdminFee(500));
+
     }
     
     public static int getPromo() {
@@ -41,7 +37,7 @@ public class Jmart
             return 0;
         }
         else {
-            newPrice = (int)((float)price * (discountPercentage /100 ));
+            newPrice = price - (int)((float)price * (discountPercentage /100 ));
             return newPrice;
         }
     }
@@ -51,7 +47,7 @@ public class Jmart
             return 0;
         }
         else {
-            return (int)((float)discountedPrice * 100/(100-discountPercentage));
+            return (int)((float)discountedPrice * (100/(100-discountPercentage)));
         }
     }
 
@@ -60,10 +56,10 @@ public class Jmart
     }
 
     public static int getAdjustedPrice(int price) {
-        return price + (int)((float)price * 0.05f);
+        return price + (int)(price * getCommissionMultiplier());
     }
 
     public static int getAdminFee(int price) {
-        return (int)((float)price * 0.05f);
+        return (int)(price * getCommissionMultiplier());
     }
 }
