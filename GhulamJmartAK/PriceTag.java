@@ -9,7 +9,7 @@ package GhulamJmartAK;
  */
 public class PriceTag
 {
-       public static double COMMISSION_MUTIPLIER = 0.05;
+    public static double COMMISSION_MUTIPLIER = 0.05;
     public static double BOTTOM_PRICE = 20000.0;
     public static double BOTTOM_FEE= 1000.0;
     public double discount;
