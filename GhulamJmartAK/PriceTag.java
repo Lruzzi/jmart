@@ -15,12 +15,12 @@ public class PriceTag
     public double discount;
     public double price;
 
-    public void PriceTage (double price) {
+    public PriceTag (double price) {
         this.price = price;
         this.discount = 0.0;
     }
 
-    public void PriceTag (double price, double discount) {
+    public PriceTag (double price, double discount) {
         this.price = price;
         this.discount = discount;
     }
@@ -30,24 +30,21 @@ public class PriceTag
     }
 
     public double getAdminFee () {
-        if (getDiscountedPrice() > BOTTOM_PRICE) {
-            return getDiscountedPrice() * COMMISSION_MUTIPLIER;
-        }
-        else if (getDiscountedPrice() < BOTTOM_PRICE) {
+        if (getDiscountedPrice() < BOTTOM_PRICE) {
             return BOTTOM_FEE;
         }
         else {
-            return getDiscountedPrice() - (getDiscountedPrice() * COMMISSION_MUTIPLIER);
+            return (getDiscountedPrice() * COMMISSION_MUTIPLIER);
         }
     }
 
     private double getDiscountedPrice() {
-        if (discount >= 100.00)
+        if (this.discount >= 100.00)
         {
             return 0;
         }
         else {
-            return price - (price * discount);
+            return this.price - (this.price * this.discount);
         }
     }
 }
