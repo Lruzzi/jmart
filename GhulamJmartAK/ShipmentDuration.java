@@ -29,5 +29,9 @@ public class ShipmentDuration
     public ShipmentDuration(ShipmentDuration[] args) {
         
     }
+    
+    public boolean isDuration (ShipmentDuration reference) {
+        return false;
+    }
 
 }
