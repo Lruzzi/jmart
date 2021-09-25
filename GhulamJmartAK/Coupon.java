@@ -16,10 +16,11 @@ public class Coupon
     public final Type type;
     public final double minimum;
     private boolean used;
+    
+    public static enum Type{
+        DISCOUNT, REBATE
+    }
 
-    /**
-     * Constructor for objects of class Coupon
-     */
     public Coupon(String name, int code, Type type, double cut, double minimum)
     {
         this.name = name;
@@ -28,10 +29,6 @@ public class Coupon
         this.type = type;
         this.minimum = minimum;
         used = false;
-    }
-    
-    public static enum Type{
-        DISCOUNT, REBATE
     }
     
     public boolean isUsed(){
@@ -47,18 +44,14 @@ public class Coupon
         }
     }
     
-    /*public double apply(PriceTag priceTag) {
+    public double apply(PriceTag priceTag) {
         used = true;
         switch(type)
         {
-            case REBATE:
-                if(priceTag.getAdjustedPrice() >= cut) {
-                    return 0.0;
-                }
-                else {
-                    return (priceTag.getAdjustedPrice() - cut);
-                }
+            case DISCOUNT :
+                return (priceTag.getAdjustedPrice() * ((100-cut) / 100));
+            default :
+                return (priceTag.getAdjustedPrice() - cut);
         }
-    }*/
-
+    }
 }

@@ -39,12 +39,12 @@ public class PriceTag
     }
 
     private double getDiscountedPrice() {
-        if (this.discount >= 100.00)
+        if (discount >= 100.00)
         {
             return 0;
         }
         else {
-            return this.price - (this.price * this.discount);
+            return price - (price * (discount/100));
         }
     }
 }

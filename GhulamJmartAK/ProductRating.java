@@ -31,19 +31,19 @@ public class ProductRating
     
     public double getAverage() {
         if (this.count == 0) {
-            return 0;
+            return 0.0;
         }
         else {
-            return this.total/this.count;
+            return (double)(total/count);
         }
     }
     
     public long getCount() {
-        return this.count;
+        return count;
     }
     
     public long getTotal() {
-        return this.total;
+        return total;
     }
 
 }
