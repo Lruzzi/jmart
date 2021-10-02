@@ -9,7 +9,7 @@ import java.util.regex.*;/**
 public class Store extends Recognizable implements FileParser
 {
     public static final String REGEX_PHONE = "^(\\d{9,12]}$";
-    public static final String REGEX_NAME = "^[A-Z].[a-z](?!.(\\s)\1).{4,20}$";
+    public static final String REGEX_NAME = "^[A-Z](?!(?:.*[ ]){2})(?!.(\s)\1).{3,19}$";
     public String name;
     public String address;
     public String phoneNumber;
@@ -41,12 +41,12 @@ public class Store extends Recognizable implements FileParser
 
     public boolean validate() {
         Pattern phoneNumber_Pattern = Pattern.compile(REGEX_PHONE);
-        Matcher phoneNumber_Matcher = phoneNumber_Pattern.matcher(this.phoneNumber);
+        Matcher phoneNumber_Matcher = phoneNumber_Pattern.matcher(phoneNumber);
         
         Pattern name_Pattern = Pattern.compile(REGEX_NAME);
-        Matcher name_Matcher = name_Pattern.matcher(this.name);
+        Matcher name_Matcher = name_Pattern.matcher(name);
         
-        if(phoneNumber_Matcher.find() && name_Matcher.find()) {
+        if(phoneNumber_Matcher.find() == true && name_Matcher.find() == true) {
             return true;
         }
         else {
