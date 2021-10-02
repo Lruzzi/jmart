@@ -40,10 +40,15 @@ public class Store extends Recognizable implements FileParser
     }
 
     public boolean validate() {
-        if(String.valueOf(REGEX_NAME).length() >= 9 && String.valueOf(REGEX_NAME).length() <=12 && String.valueOf(REGEX_PHONE).length() >= 4 && String.valueOf(REGEX_PHONE).length() <=20) {
+        Pattern phoneNumber_Pattern = Pattern.compile(REGEX_PHONE);
+        Matcher phoneNumber_Matcher = phoneNumber_Pattern.matcher(this.phoneNumber);
+        
+        Pattern name_Pattern = Pattern.compile(REGEX_NAME);
+        Matcher name_Matcher = name_Pattern.matcher(this.name);
+        
+        if(phoneNumber_Matcher.find() && name_Matcher.find()) {
             return true;
         }
-
         else {
             return false;
         }
