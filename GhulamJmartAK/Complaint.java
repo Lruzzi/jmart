@@ -1,5 +1,7 @@
 package GhulamJmartAK;
 
+import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Write a description of class Complaint here.
@@ -10,13 +12,14 @@ package GhulamJmartAK;
 public class Complaint extends Recognizable implements FileParser
 {
     // instance variables - replace the example below with your own
-    public String date;
+    Calendar cal = Calendar.getInstance();
+    Date date;
     public String desc;
     
     public Complaint(int id, String desc) {
         super(id);
         this.desc = desc;
-        date = "27 September 2021";
+        date = cal.getTime();
     }
 
     @Override
