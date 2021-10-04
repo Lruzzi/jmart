@@ -9,7 +9,7 @@ import java.util.regex.*;/**
 public class Store extends Recognizable implements FileParser
 {
     public static final String REGEX_PHONE = "^(\\d{9,12]}$";
-    public static final String REGEX_NAME = "^[A-Z](?!(?:.*[ ]){2})(?!.(\s)\1).{3,19}$";
+    public static final String REGEX_NAME = "^(?=^[A-Z])(?![A-Z a-z]{20,})((?=[A-Z a-z]{4,}).)((?!\\s{2}).)*$";
     public String name;
     public String address;
     public String phoneNumber;

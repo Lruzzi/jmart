@@ -1,6 +1,8 @@
 package GhulamJmartAK;
 
 
+import java.util.ArrayList;
+import java.util.Date;
 /**
  * Write a description of class Invoice here.
  *
@@ -26,16 +28,24 @@ public abstract class Invoice extends Recognizable implements FileParser
         GOOD
     }
 
-    public String date;
+    public class Record
+    {
+        public Status status;
+        public Date date;
+        public String message; 
+    }
+
+    public Date date;
     public int buyreId, productId, complaintId;
     public Rating rating;
     public Status status;
+    public ArrayList<Record> history = new ArrayList<Record>();;
 
     protected Invoice(int id, int buyerId, int productId) {
         super(id);
         this.buyreId = buyerId;
         this.productId = productId;
-        date = "27 September 2021";
+        date = new Date();
         rating = Rating.NONE;
         status = Status.WAITING_CONFIRMATION;
     }
