@@ -6,7 +6,8 @@ import java.util.Date;
 /**
  * Write a description of class Invoice here.
  *
- * @author (your name)
+ * @author @ghulamif8
+ * @abrahamkristanto
  * @version (a version number or a date)
  */
 public abstract class Invoice extends Recognizable implements FileParser
