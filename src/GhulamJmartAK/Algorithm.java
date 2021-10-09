@@ -190,9 +190,17 @@ public class Algorithm {
     }
 
     public static <T> T max(T first, T second) {
-        return null;
+        if(first.hashCode()>second.hashCode()){
+            return first;
+        }else {
+            return second;
+        }
     }
     public static <T> T min(T first, T second) {
-        return null;
+        if(first.hashCode()>second.hashCode()){
+            return second;
+        }else {
+            return first;
+        }
     }
 }
