@@ -4,203 +4,101 @@ import java.util.*;
 
 public class Algorithm {
     private Algorithm(){}
-
-    public static <T> int count(T[] array, T value) {
-        int counter = 0;
-        for(T e : array)
-        {
-            counter++;
-        }
-        return counter;
+    public static <T> int count (T[] array, T value){
+        Iterator<T> iterator = Arrays.stream(array).iterator();
+        return count(iterator, value);
     }
-
-    public static <T> int count(Iterable<T> iterable, T value) {
-        int counter = 0;
-        for(T e : iterable)
-        {
-            counter++;
-        }
-        return counter;
+    public static <T> int count (Iterable<T> iterable, T value){
+        Predicate<T> pred = value::equals;
+        return count(iterable, pred);
     }
-
-
-    public static <T> int count(Iterator<T> iterator, T value) {
-        int counter = 0;
-
-        if (iterator.hasNext())
-        {
-            counter++;
-        }
-        return counter;
+    public static <T> int count (Iterator<T> iterator, T value){
+        Predicate<T> pred = value::equals;
+        return count(iterator, pred);
     }
-
-    @SuppressWarnings("unlikely-arg-type")
-    public static <T> int count(T[] array, Predicate<T> pred) {
-        if (pred.equals(false))
-        {
-            return 0;
-        }
-
-        int counter = 0;
-        for(T e : array)
-        {
-            counter++;
-        }
-        return counter;
+    public static <T> int count (T[] array, Predicate<T> pred){
+        Iterator<T> iterator = Arrays.stream(array).iterator();
+        return count(iterator, pred);
     }
-
-    @SuppressWarnings("unlikely-arg-type")
-    public static <T> int count(Iterable<T> iterable, Predicate<T> pred) {
-        if (pred.equals(false))
-        {
-            return 0;
-        }
-
-        int counter = 0;
-        for(T e : iterable)
-        {
-            counter++;
-        }
-        return counter;
+    public static <T> int count (Iterable<T> iterable, Predicate<T> pred){
+        return count(iterable.iterator(), pred);
     }
-
-    @SuppressWarnings("unlikely-arg-type")
-    public static <T> int count(Iterator<T> iterator, Predicate<T> pred) {
-        if (pred.equals(false))
-        {
-            return 0;
-        }
-
+    public static <T> int count (Iterator<T> iterator, Predicate<T> pred){
         int counter = 0;
-
-        if (iterator.hasNext())
-        {
-            counter++;
+        while(iterator.hasNext()){
+            if(pred.predicate(iterator.next())){
+                counter++;
+            }
         }
         return counter;
     }
 
     public static <T> boolean exists(T[] array, T value) {
-        for(T e : array)
-        {
-            if(e.equals(value)) {
-                return true;
-            }
-        }
-        return false;
+        Predicate<T> pred = value::equals;
+        return exists(array, pred);
+    }
+    public static <T> boolean exists(Iterable<T> iterable, T value){
+        Predicate<T> pred = value::equals;
+        return exists(iterable, pred);
+    }
+    public static <T> boolean exists(Iterator<T> iterator, T value){
+        Predicate<T> pred = value::equals;
+        return exists(iterator, pred);
+    }
+    public static <T> boolean exists(T[] array, Predicate<T> pred){
+        Iterator<T> iterator = Arrays.stream(array).iterator();
+        return exists(iterator, pred);
+    }
+    public static <T> boolean exists(Iterable<T> iterable, Predicate<T> pred){
+        return exists(iterable.iterator(), pred);
+    }
+    public static <T> boolean exists(Iterator<T> iterator, Predicate<T> pred){
+        return find(iterator, pred) != null ? true : false;
     }
 
-    public static <T> boolean exists(Iterable<T> iterable, T value) {
-        for(T e : iterable)
-        {
-            if(e.equals(value)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static <T> boolean exists(Iterator<T> iterator, T value) {
-        while(iterator.hasNext())
-        {
-            if(iterator.next().equals(value)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static <T> boolean exists(T[] array, Predicate<T> pred) {
-        for(T e : array)
-        {
-            if(e.equals(pred)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static <T> boolean exists(Iterable<T> iterable, Predicate<T> pred) {
-        for(T e : iterable)
-        {
-            if(e.equals(pred)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static <T> boolean exists(Iterator<T> iterator, Predicate<T> pred) {
-        while(iterator.hasNext())
-        {
-            if(iterator.next().equals(pred)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public static <T> T find(T[] array, T value) {
-        for (T a : array){
-            if(a.equals(value)){
-                return a;
-            }
-        }
-        return null;
+        Predicate<T> pred = value::equals;
+        return find(array, pred);
     }
     public static <T> T find(Iterable<T> iterable, T value) {
-        for (T a : iterable){
-            if(a.equals(value)){
-                return a;
-            }
-        }
-        return null;
+        final Iterator <T> iterator = iterable.iterator();
+        return find(iterator, value);
     }
     public static <T> T find(Iterator<T> iterator, T value) {
-        while (iterator.hasNext()){
-            if(iterator.next().equals(value)){
-                return iterator.next();
-            }
-        }
-        return null;
+        Predicate<T> pred = value::equals;
+        return find(iterator, pred);
     }
     public static <T> T find(T[] array, Predicate<T> pred) {
-        for (T a : array){
-            if(a.equals(pred)){
-                return a;
-            }
-        }
-        return null;
+        Iterator<T> iterator = Arrays.stream(array).iterator();
+        return find(iterator, pred);
     }
     public static <T> T find(Iterable<T> iterable, Predicate<T> pred) {
-        for (T a : iterable){
-            if(a.equals(pred)){
-                return a;
-            }
-        }
-        return null;
+        final Iterator <T> iterator = iterable.iterator();
+        return find(iterator, pred);
     }
     public static <T> T find(Iterator<T> iterator, Predicate<T> pred) {
-        while (iterator.hasNext()){
-            if(iterator.next().equals(pred)){
-                return iterator.next();
+        while(iterator.hasNext()){
+            T object = iterator.next();
+            if(pred.predicate(object)) {
+                return object;
             }
         }
         return null;
     }
 
-    public static <T> T max(T first, T second) {
-        if(first.hashCode()>second.hashCode()){
-            return first;
-        }else {
+    public static <T extends Comparable<? super T>> T max(T first, T second) {
+        if(first.compareTo(second)<0){
             return second;
+        }else{
+            return first;
         }
     }
-    public static <T> T min(T first, T second) {
-        if(first.hashCode()>second.hashCode()){
-            return second;
-        }else {
+    public static <T extends Comparable<? super T>> T min(T first, T second) {
+        if(first.compareTo(second)<0){
             return first;
+        }else{
+            return second;
         }
     }
 }
