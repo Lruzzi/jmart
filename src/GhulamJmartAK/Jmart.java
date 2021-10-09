@@ -1,6 +1,8 @@
 package GhulamJmartAK;
 
 
+import static java.lang.System.out;
+
 /**
  * Write a description of class Jmart here.
  *
@@ -11,6 +13,6 @@ package GhulamJmartAK;
 public class Jmart
 {
     public static void main (String[] args) {
-       
+       System.out.println("Hello from Intellij IDEA");
     }
 }
