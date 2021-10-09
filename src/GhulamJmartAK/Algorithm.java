@@ -140,5 +140,59 @@ public class Algorithm {
         return false;
     }
 
-    
+    public static <T> T find(T[] array, T value) {
+        for (T a : array){
+            if(a.equals(value)){
+                return a;
+            }
+        }
+        return null;
+    }
+    public static <T> T find(Iterable<T> iterable, T value) {
+        for (T a : iterable){
+            if(a.equals(value)){
+                return a;
+            }
+        }
+        return null;
+    }
+    public static <T> T find(Iterator<T> iterator, T value) {
+        while (iterator.hasNext()){
+            if(iterator.next().equals(value)){
+                return iterator.next();
+            }
+        }
+        return null;
+    }
+    public static <T> T find(T[] array, Predicate<T> pred) {
+        for (T a : array){
+            if(a.equals(pred)){
+                return a;
+            }
+        }
+        return null;
+    }
+    public static <T> T find(Iterable<T> iterable, Predicate<T> pred) {
+        for (T a : iterable){
+            if(a.equals(pred)){
+                return a;
+            }
+        }
+        return null;
+    }
+    public static <T> T find(Iterator<T> iterator, Predicate<T> pred) {
+        while (iterator.hasNext()){
+            if(iterator.next().equals(pred)){
+                return iterator.next();
+            }
+        }
+        return null;
+    }
+
+    public static <T> T max(T first, T second) {
+        return null;
+    }
+    public static <T> T min(T first, T second) {
+        return null;
+    }
 }

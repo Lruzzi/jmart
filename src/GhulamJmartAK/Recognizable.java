@@ -41,11 +41,6 @@ public abstract class Recognizable implements Comparable <Recognizable>
 
     @Override
     public int compareTo(Recognizable other) {
-        if (id == other.id){
-            return 1;
-        }
-        else{
-            return 0;
-        }
+        return Integer.compare(this.id, other.id);
     }
 }
