@@ -1,46 +1,47 @@
 package GhulamJmartAK;
 
 
-public abstract class Recognizable implements Comparable <Recognizable>
+public abstract class Recognizable implements Comparable<Recognizable>
 {
-    public int id;
+    public final int id;
 
-    /**
-     * Constructor for objects of class Recognizable
-     */
-    protected Recognizable(int id)
+    public static <T> int setClosingId(Class<T> clazz){
+        if(clazz.isAssignableFrom(Recognizable.class)){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
+
+    public static <T> int getClosing(Class<T> clazz, int id){
+        if(clazz.isAssignableFrom(Recognizable.class)){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
+
+    protected Recognizable()
     {
-        // initialise instance variables
-        this.id = id;
+        this.id = 1;
+    }
+    public boolean equals(Object other) {
+        if(!(other instanceof Recognizable)){
+            Recognizable checked = (Recognizable)other;
+            if(checked.id == this.id){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean equals(Recognizable other) {
+        if(this.id == other.id){
+            return true;
+        }
+        return false;
     }
 
-    public static int setClosingID(Class<Recognizable>clazz, int id){
-        if(Class.class.isAssignableFrom(Recognizable.class)){
-            return 0;
-        }
-        else{
-            return 1;
-        }
-    }
-
-    public static int getClosingID(Class<Recognizable>clazz) {
-        if(Class.class.isAssignableFrom(Recognizable.class)){
-            return 0;
-        }
-        else{
-            return 1;
-        }
-    }
-
-    public boolean equals(Object recognizable) {
-        return (recognizable instanceof Recognizable) && ((Recognizable) recognizable).id == id;
-    }
-    public boolean equals(Recognizable recognizable) {
-        return recognizable.id == id;
-    }
-
-    @Override
     public int compareTo(Recognizable other) {
-        return Integer.compare(this.id, other.id);
+        return other.id/this.id;
     }
 }

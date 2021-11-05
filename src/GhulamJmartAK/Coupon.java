@@ -7,56 +7,46 @@ package GhulamJmartAK;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Coupon extends Recognizable implements FileParser
+public class Coupon
 {
-    // instance variables - replace the example below with your own
-    public final String name;
     public final int code;
-    public final double cut;
+    public final double cut, minimum;
+    public final String name;
     public final Type type;
-    public final double minimum;
     private boolean used;
-    
-    public static enum Type{
-        DISCOUNT, REBATE
-    }
 
-    public Coupon(int id, String name, int code, Type type, double cut, double minimum)
-    {
-        super(id);
+    public Coupon(String name, int code, Type type, double cut, double minimum){
         this.name = name;
         this.code = code;
-        this.cut = cut;
         this.type = type;
+        this.cut = cut;
         this.minimum = minimum;
         used = false;
     }
-    
-    public boolean isUsed(){
-        return used;
+
+    public double apply(Treasury treasury){
+        this.used = true;
+        if (type == Type.DISCOUNT) {
+            return (Treasury.getAdjustedPrice(treasury.price, treasury.discount) * ((100 - cut) / 100));
+        }
+        return (Treasury.getAdjustedPrice(treasury.price, treasury.discount) - cut);
     }
-    
-    public boolean canApply(PriceTag priceTag) {
-        if(priceTag.getAdjustedPrice() >= minimum && this.used == false){
+
+    public boolean canApply(Treasury treasury){
+        if (Treasury.getAdjustedPrice(treasury.price, treasury.discount) >= minimum && !used){
             return true;
         }
         else{
             return false;
         }
     }
-    
-    public double apply(PriceTag priceTag) {
-        used = true;
-        switch(type)
-        {
-            case DISCOUNT :
-                return (priceTag.getAdjustedPrice() * ((100-cut) / 100));
-            default :
-                return (priceTag.getAdjustedPrice() - cut);
-        }
+
+    public boolean isUsed(){
+        return this.used;
     }
-    
-    public boolean read(String content) {
-        return false;
+
+    public static enum Type{
+        DISCOUNT,
+        REBATE
     }
 }

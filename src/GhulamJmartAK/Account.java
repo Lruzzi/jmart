@@ -8,39 +8,36 @@ import java.util.regex.*;
  * @abrahamkristanto
  */
 
-public class Account extends Recognizable implements FileParser
+public class Account extends Recognizable
 {
-    // instance variables - replace the example below with your own
     public static final String REGEX_EMAIL = "^\\w+([.&`~-]?\\w+)*@\\w+([.-]?\\w+)+$";
     public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d][^-\\s]{8,}$";
-    public String name;
-    public String email;
-    public String password;
+    public double balance;
+    public String email, name, password;
+    public Store store;
 
-    public Account(int id, String name, String email, String password)
-    {
-        super(id);
+    public Account(String name, String email, String password, double balance){
         this.name = name;
         this.email = email;
         this.password = password;
+        this.balance = balance;
     }
 
-    public boolean read(String content) {
-        return false;
-    }
+    public boolean validate(){
+        Pattern patternEmail = Pattern.compile(REGEX_EMAIL);
+        Matcher matcherEmail = patternEmail.matcher(email);
+        boolean matchEmail = matcherEmail.find();
+        boolean hasilEmail = matchEmail ? true : false;
 
-    public boolean validate() {
-        Pattern email_Pattern = Pattern.compile(REGEX_EMAIL);
-        Matcher email_Matcher = email_Pattern.matcher(email);
-        
-        Pattern password_Pattern = Pattern.compile(REGEX_PASSWORD);
-        Matcher password_Matcher = password_Pattern.matcher(password);
-        
-        if(email_Matcher.find() == true && password_Matcher.find() == true) {
+        Pattern patternPassword = Pattern.compile(REGEX_PASSWORD);
+        Matcher matcherPassword = patternPassword.matcher(password);
+        boolean matchPassword = matcherPassword.find();
+        boolean hasilPassword = matchPassword ? true : false;
+
+        if (hasilEmail == true && hasilPassword == true){
             return true;
         }
-        else {
+        else
             return false;
-        }
     }
 }

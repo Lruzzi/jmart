@@ -1,5 +1,6 @@
 package GhulamJmartAK;
-
+import java.util.ArrayList;
+import java.util.Date;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,49 +11,37 @@ import java.util.Date;
  * @abrahamkristanto
  * @version (a version number or a date)
  */
-public abstract class Invoice extends Recognizable implements FileParser
+public abstract class Invoice extends Recognizable
 {
-    public enum Status{
-        WAITING_CONFIRMATION,
-        CANCELLED,
-        ON_PROGRES,
-        ON_DELIVERY,
-        COMPLAYINT,
-        FINISHED,
-        FAILED
+    public static enum Status{
+        WAITING_CONFIRMATION,CANCELED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED;
     }
 
-    public enum Rating{
-        NONE,
-        BAD,
-        NEUTRAL,
-        GOOD
+    public static enum Rating{
+        NONE,BAD,NEUTRAL,GOOD;
     }
 
-    public class Record
-    {
+    public class Record{
         public Status status;
         public Date date;
-        public String message; 
+        public String message;
     }
 
-    public Date date;
-    public int buyreId, productId, complaintId;
+    public final Date date;
+    public int buyerId;
+    public int productId;
+    public int complaintId;
     public Rating rating;
     public Status status;
-    public ArrayList<Record> history = new ArrayList<Record>();;
+    public ArrayList<Record> history;
 
-    protected Invoice(int id, int buyerId, int productId) {
-        super(id);
-        this.buyreId = buyerId;
+    protected Invoice(int buyerId, int productId){
+        this.buyerId = buyerId;
         this.productId = productId;
-        date = new Date();
-        rating = Rating.NONE;
-        status = Status.WAITING_CONFIRMATION;
-    }
-
-    public boolean read(String content) {
-        return false;
+        this.date = new Date();
+        this.complaintId = 1;
+        this.rating = Rating.NONE;
+        this.status = Status.WAITING_CONFIRMATION;
     }
 
     public abstract double getTotalPay();

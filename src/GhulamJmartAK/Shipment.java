@@ -10,7 +10,7 @@ import java.util.Calendar;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Shipment implements FileParser
+public class Shipment
 {
     public String address;
     public int shipmentCost;

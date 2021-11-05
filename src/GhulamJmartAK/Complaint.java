@@ -1,7 +1,7 @@
 package GhulamJmartAK;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Write a description of class Complaint here.
@@ -9,26 +9,23 @@ import java.util.Date;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Complaint extends Recognizable implements FileParser
+public class Complaint extends Recognizable
 {
-    
     public Date date;
     public String desc;
-    
-    public Complaint(int id, String desc) {
-        super(id);
+
+    public Complaint(String desc){
         this.desc = desc;
-        date = new Date();
+        this.date = new Date();
     }
 
-    @Override
-    public boolean read(String content) {
+    public boolean validate(){
         return false;
     }
 
     public String toString(){
         SimpleDateFormat SDformat = new SimpleDateFormat("dd/MM/yyyy");
         String formatDate = SDformat.format(this.date);
-        return "{date = " + formatDate + "desc = '" + this.desc + "'}"; 
+        return "{date = " + formatDate + "desc = '" + this.desc + "'}";
     }
 }
