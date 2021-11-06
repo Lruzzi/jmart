@@ -6,7 +6,7 @@ import java.util.regex.*;/**
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Store extends Recognizable
+public class Store
 {
 
     public String name, address, phoneNumber;

@@ -2,8 +2,6 @@ package GhulamJmartAK;
 import java.util.ArrayList;
 import java.util.Date;
 
-import java.util.ArrayList;
-import java.util.Date;
 /**
  * Write a description of class Invoice here.
  *
@@ -11,7 +9,7 @@ import java.util.Date;
  * @abrahamkristanto
  * @version (a version number or a date)
  */
-public abstract class Invoice extends Recognizable
+public abstract class Invoice extends Serializable
 {
     public static enum Status{
         WAITING_CONFIRMATION,CANCELED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED;
