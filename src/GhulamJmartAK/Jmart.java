@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class Jmart
 {
-    public static List<Product> filterByAccountid(List<Product> list, int accountId, int page, int pageSize) {
+    public static List<Product> filterByAccountId(List<Product> list, int accountId, int page, int pageSize) {
         Predicate<Product> predicate = tPred -> (tPred.accountId == accountId);
         return paginate(list, page, pageSize, predicate);
     }
@@ -68,6 +68,10 @@ public class Jmart
             List<Product> list = read(filepath);
             List<Product> filtered = filterByPrice(list, 13000.0, 15000.0);
             filtered.forEach(product -> System.out.println(product.price));
+            List<Product> filteredByName = filterByName(list, "gtx", 1, 5);
+            filteredByName.forEach(product -> System.out.println(product.name));
+            List<Product> filteredById = filterByAccountId(list, 1, 0, 5);
+            filteredById.forEach(product -> System.out.println(product.name));
         } catch (Throwable t) {
             t.printStackTrace();
         }
