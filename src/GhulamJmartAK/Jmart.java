@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 /**
  * Write a description of class Jmart here.
  *
@@ -18,27 +19,36 @@ import java.util.List;
 
 public class Jmart
 {
-    public static List<Product> filterByCategory (List<Product>list, ProductCategory category){
-        List<Product> tempHasil = new ArrayList<Product>();
+    public static List<Product> filterByAccountid(List<Product> list, int accountId, int page, int pageSize) {
+        Predicate<Product> predicate = tPred -> (tPred.accountId == accountId);
+        return paginate(list, page, pageSize, predicate);
+    }
 
-        for(Product temp : list){
-            if(temp.category == category){
-                tempHasil.add(temp);
+    public static List<Product> filterByCategory(List<Product> list, ProductCategory category) {
+            List<Product> resultList = new ArrayList<Product>();
+            for (Product prod : list) {
+                if (prod.category.equals(category)) {
+                    resultList.add(prod);
+                }
             }
-        }
-        return tempHasil;
+            return resultList;
+    }
+
+    public static List<Product> filterByName (List<Product> list, String search, int page, int pageSize) {
+        Predicate<Product> predicate = tName -> (tName.name.toLowerCase().contains(search.toLowerCase()));
+        return paginate(list, page, pageSize, predicate);
     }
 
     public static List<Product> filterByPrice (List<Product>list, double minPrice, double maxPrice) {
         List<Product> temp = new ArrayList<Product>();
-        for (Product product : list) {
-            if (minPrice != 0.0 && product.price < minPrice) {
+        for (Product prod : list) {
+            if (minPrice != 0.0 && prod.price < minPrice) {
                 continue;
             }
-            if (maxPrice != 0.0 && product.price > maxPrice){
+            if (maxPrice != 0.0 && prod.price > maxPrice){
                 continue;
             }
-            temp.add(product);
+            temp.add(prod);
         }
         return temp;
     }
@@ -61,6 +71,10 @@ public class Jmart
         } catch (Throwable t) {
             t.printStackTrace();
         }
+    }
+
+    private static List<Product> paginate (List<Product> list, int page, int pageSize, Predicate<Product> pred) {
+        return list.stream().filter(temporare -> pred.predicate(temporare)).skip(page * pageSize).limit(pageSize).collect(Collectors.toList());
     }
 
     public static List<Product> read(String filepath) throws FileNotFoundException {
