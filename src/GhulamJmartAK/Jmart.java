@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 /**
  * Write a description of class Jmart here.
  *
@@ -20,37 +19,25 @@ import java.util.stream.Collectors;
 public class Jmart
 {
     public static List<Product> filterByAccountId(List<Product> list, int accountId, int page, int pageSize) {
-        Predicate<Product> predicate = tPred -> (tPred.accountId == accountId);
-        return paginate(list, page, pageSize, predicate);
+        return paginate(list, page, pageSize, product -> product.accountId == accountId);
     }
 
     public static List<Product> filterByCategory(List<Product> list, ProductCategory category) {
-            List<Product> resultList = new ArrayList<Product>();
-            for (Product prod : list) {
-                if (prod.category.equals(category)) {
-                    resultList.add(prod);
-                }
-            }
-            return resultList;
+        return Algorithm.<Product>collect(list, prod -> prod.category == category);
     }
 
-    public static List<Product> filterByName (List<Product> list, String search, int page, int pageSize) {
-        Predicate<Product> predicate = tName -> (tName.name.toLowerCase().contains(search.toLowerCase()));
-        return paginate(list, page, pageSize, predicate);
+    public static List<Product> filterByName(List<Product> list, String search, int page, int pageSize) {
+        return paginate(list, page, pageSize, product -> product.name.toLowerCase().contains(search.toLowerCase()));
     }
 
-    public static List<Product> filterByPrice (List<Product>list, double minPrice, double maxPrice) {
-        List<Product> temp = new ArrayList<Product>();
-        for (Product prod : list) {
-            if (minPrice != 0.0 && prod.price < minPrice) {
-                continue;
-            }
-            if (maxPrice != 0.0 && prod.price > maxPrice){
-                continue;
-            }
-            temp.add(prod);
+    public static List<Product> filterByPrice(List<Product> list, double minPrice, double maxPrice) {
+        if (minPrice <= 0) {
+            return Algorithm.<Product>collect(list, prod -> prod.price <= maxPrice);
         }
-        return temp;
+        else if (maxPrice <= 0) {
+            return Algorithm.<Product>collect(list, prod -> prod.price >= minPrice);
+        }
+        return Algorithm.<Product>collect(list, prod -> prod.price <= maxPrice && prod.price >= minPrice);
     }
 
     public static void main (String[] args)
@@ -66,7 +53,7 @@ public class Jmart
         String filepath = "D:/Praktikum OOP/jmart/src/GhulamJmartAK/randomProductList.json";
         try {
             List<Product> list = read(filepath);
-            List<Product> filtered = filterByPrice(list, 13000.0, 15000.0);
+            List<Product> filtered = filterByPrice(list, 13000.0, 14000.0);
             filtered.forEach(product -> System.out.println(product.price));
             List<Product> filteredByName = filterByName(list, "gtx", 1, 5);
             filteredByName.forEach(product -> System.out.println(product.name));
@@ -77,8 +64,23 @@ public class Jmart
         }
     }
 
-    private static List<Product> paginate (List<Product> list, int page, int pageSize, Predicate<Product> pred) {
-        return list.stream().filter(temporare -> pred.predicate(temporare)).skip(page * pageSize).limit(pageSize).collect(Collectors.toList());
+    private static List<Product> paginate(List<Product> list, int page, int pageSize, Predicate<Product> pred) {
+        int iteration = 0;
+        int occurences = 0;
+        int startingIdx = page * pageSize;
+        List<Product> pageList = new ArrayList<>(pageSize);
+
+        for (; iteration < list.size() && occurences < startingIdx; ++iteration) {
+            if (pred.predicate(list.get(iteration))) {
+                ++occurences;
+            }
+        }
+        for (int i = iteration; i < list.size() && pageList.size() < pageSize; ++i) {
+            if (pred.predicate(list.get(i))) {
+                pageList.add(list.get(i));
+            }
+        }
+        return pageList;
     }
 
     public static List<Product> read(String filepath) throws FileNotFoundException {
@@ -89,6 +91,4 @@ public class Jmart
         List<Product> returnList = gson.fromJson(br, userListType);
         return returnList;
     }
-
-
 }

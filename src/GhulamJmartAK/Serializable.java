@@ -29,10 +29,7 @@ public abstract class Serializable implements Comparable<Serializable>
         return false;
     }
     public boolean equals(Serializable other) {
-        if(this.id == other.id){
-            return true;
-        }
-        return false;
+        return (other instanceof Serializable) && ((Serializable) other).id == id;
     }
 
     public static <T> int getClosingId(Class<T> clazz){
