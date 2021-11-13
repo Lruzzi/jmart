@@ -29,9 +29,16 @@ public class JsonTable<T> extends Vector {
     }
 
     public static <T> T readJson (Class<T>clazz, String filepath) throws FileNotFoundException{
-        final JsonReader jsonread = new JsonReader(new FileReader(filepath));
-        return gson.fromJson(jsonread, clazz);
+        T readerJson = null;
+        try {
+            final JsonReader readJson = new JsonReader(new FileReader(filepath));
+            readerJson = gson.fromJson(readJson, clazz);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return readerJson;
     }
+
     public void writeJson () throws IOException {
         writeJson(this, this.filepath);
     }
