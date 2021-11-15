@@ -1,5 +1,4 @@
 package GhulamJmartAK;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -11,36 +10,36 @@ import java.util.Date;
  */
 public abstract class Invoice extends Serializable
 {
-    public static enum Status{
-        WAITING_CONFIRMATION,CANCELED, ON_PROGRESS, ON_DELIVERY, COMPLAINT, FINISHED, FAILED;
-    }
-
-    public static enum Rating{
-        NONE,BAD,NEUTRAL,GOOD;
-    }
-
-    public class Record{
-        public Status status;
-        public Date date;
-        public String message;
-    }
-
-    public final Date date;
     public int buyerId;
     public int productId;
     public int complaintId;
     public Rating rating;
-    public Status status;
-    public ArrayList<Record> history;
+    public final Date date;
 
-    protected Invoice(int buyerId, int productId){
+    protected Invoice(int buyerId, int productId) {
         this.buyerId = buyerId;
         this.productId = productId;
-        this.date = new Date();
-        this.complaintId = 1;
+        date = java.util.Calendar.getInstance().getTime();
+        this.complaintId = -1;
         this.rating = Rating.NONE;
-        this.status = Status.WAITING_CONFIRMATION;
     }
 
-    public abstract double getTotalPay();
+    public enum Status {
+        WAITING_CONFIRMATION,
+        CANCELLED,
+        ON_PROGRESS,
+        ON_DELIVERY,
+        COMPLAINT,
+        FINISHED,
+        FAILED
+    }
+
+    public enum Rating {
+        NONE,
+        BAD,
+        NEUTRAL,
+        GOOD
+    }
+
+    public abstract double getTotalPay(Product product);
 }

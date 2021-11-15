@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
 import java.lang.reflect.Array;
 import java.util.Collections;
 import java.util.Vector;
@@ -18,17 +17,15 @@ public class JsonTable<T> extends Vector {
 
     public JsonTable(Class<T> clazz, String filepath) throws IOException {
         this.filepath = filepath;
-        try {
-            Class<T[]> array = (Class<T[]>) Array.newInstance(clazz, 0).getClass();
-            T[] hasil = JsonTable.readJson(array, filepath);
-            Collections.addAll(this, hasil);
 
-        } catch (FileNotFoundException e) {
-            File file = new File(filepath);
-        }
+        @SuppressWarnings("unchecked")
+        Class<T[]> array = (Class<T[]>) Array.newInstance(clazz, 0).getClass();
+
+        T[] result = JsonTable.readJson(array, this.filepath);
+        Collections.addAll(this, result);
     }
 
-    public static <T> T readJson (Class<T>clazz, String filepath) throws FileNotFoundException{
+    public static <T> T readJson(Class<T> clazz, String filepath) throws FileNotFoundException {
         T readerJson = null;
         try {
             final JsonReader readJson = new JsonReader(new FileReader(filepath));
@@ -39,13 +36,13 @@ public class JsonTable<T> extends Vector {
         return readerJson;
     }
 
-    public void writeJson () throws IOException {
+    public void writeJson() throws IOException {
         writeJson(this, this.filepath);
     }
 
-    public static void writeJson (Object object, String filepath) throws IOException {
-        final FileWriter writer = new FileWriter(filepath);
-        writer.write(gson.toJson(object));
-        writer.close();
+    public static void writeJson(Object object, String filepath) throws IOException {
+        final FileWriter fileWriter = new FileWriter(filepath);
+        fileWriter.write(gson.toJson(object));
+        fileWriter.close();
     }
 }
