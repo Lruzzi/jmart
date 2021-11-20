@@ -1,5 +1,7 @@
 package com.GhulamJmartAK;
 
+import com.GhulamJmartAK.dbjson.Serializable;
+
 import java.util.regex.*;
 
 /**

@@ -1,6 +1,8 @@
 package com.GhulamJmartAK;
 
 
+import com.GhulamJmartAK.dbjson.Serializable;
+
 /**
  * Write a description of class Product here.
  *
