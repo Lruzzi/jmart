@@ -1,5 +1,6 @@
 package com.GhulamJmartAK;
 
+import com.GhulamJmartAK.dbjson.JsonDBEngine;
 import com.GhulamJmartAK.dbjson.JsonTable;
 import com.google.gson.Gson;
 import org.springframework.boot.SpringApplication;
@@ -22,6 +23,8 @@ public class Jmart
     public static void main (String[] args)
     {
         SpringApplication.run(Jmart.class,args);
+        JsonDBEngine.Run(Jmart.class);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> JsonDBEngine.join()));
         try {
             JsonTable<Payment> table = new JsonTable<>(Payment.class,"C:/Users/Raihan Wijaya/Documents/Kuliah Universitas Indonesia/Tugas Kuliah/Semester 3/Praktikum OOP/Tugas/Case Study/jmart/randomPaymentList.json");
             ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-PP", Jmart::paymentTimekeeper);
