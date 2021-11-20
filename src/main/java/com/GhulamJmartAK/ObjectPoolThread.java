@@ -4,51 +4,56 @@ import java.util.function.Function;
 import java.util.Vector;
 
 
-public class ObjectPoolThread<T> extends Thread {
-    private boolean exitSignal;
-    private Vector<T> objectPool = new Vector<T>();
-    private Function<T, Boolean> routine;
+public class ObjectPoolThread<T> extends Thread
+{
+    private boolean exitSignal = false;
+    private Vector<T> objectPool;
+    Function<T, Boolean> routine;
 
-    public ObjectPoolThread(String name, Function<T, Boolean> routine) {
-        super(name);
+    public ObjectPoolThread(String s, Function<T, Boolean> routine)
+    {
         this.routine = routine;
     }
 
-    public ObjectPoolThread(Function<T, Boolean> routine) {
-        this.routine = routine;
-    }
-
-    public synchronized void add(T object) {
+    public synchronized void add (T object)
+    {
         objectPool.add(object);
     }
 
-    public synchronized void exit() {
+    public synchronized void exit()
+    {
         exitSignal = true;
     }
 
-    public void run() {
+    public void run ()
+    {
         exitSignal = false;
-        synchronized (this){
-            for(int i = 0; i < size(); i++) {
-                T object = objectPool.get(i);
-                boolean temp = routine.apply(object);
-                if (!temp) this.objectPool.add(object);
-                while(this.objectPool == null){
-                    try {
-                        routine.wait();
-                    }
-                    catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
+        for(int i = 0; i < this.size(); i++)
+        {
+            T object = objectPool.get(i);
+            boolean temp = routine.apply(object);
+            if(!temp) this.objectPool.add(object);
+            while(this.objectPool == null)
+            {
+                try{
+                    routine.wait();
                 }
-                if(exitSignal){
-                    break;
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
                 }
             }
+            if(exitSignal)
+            {
+                break;
+            }
         }
+
     }
 
-    public int size() {
+    public int size()
+    {
         return objectPool.size();
     }
 }

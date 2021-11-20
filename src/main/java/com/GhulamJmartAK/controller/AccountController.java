@@ -3,6 +3,7 @@ import com.GhulamJmartAK.Account;
 import com.GhulamJmartAK.Store;
 import com.GhulamJmartAK.dbjson.JsonAutowired;
 import com.GhulamJmartAK.dbjson.JsonTable;
+import com.GhulamJmartAK.dbjson.Serializable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -76,5 +77,19 @@ public class AccountController implements BasicGetController<Account> {
             }
         }
         return false;
+    }
+
+    @Override
+    @GetMapping("/{id}")
+    public Account getById(@PathVariable int id) {
+        return getJsonTable().get(id);
+    }
+
+
+
+    @Override
+    @GetMapping("/page")
+    public List<Account> getPage(int page, int pageSize) {
+        return getJsonTable().subList(page, pageSize);
     }
 }
