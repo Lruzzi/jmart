@@ -1,14 +1,15 @@
 package com.GhulamJmartAK;
 
 
+import com.GhulamJmartAK.dbjson.Serializable;
+
 /**
  * Write a description of class Coupon here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Coupon
-{
+public class Coupon extends Serializable {
     public final int code;
     public final double cut, minimum;
     public final String name;

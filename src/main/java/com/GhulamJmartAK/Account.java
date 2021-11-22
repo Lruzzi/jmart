@@ -4,11 +4,7 @@ import com.GhulamJmartAK.dbjson.Serializable;
 
 import java.util.regex.*;
 
-/**
- * This is Account Class
- * @ghulamif8
- * @abrahamkristanto
- */
+
 
 public class Account extends Serializable
 {

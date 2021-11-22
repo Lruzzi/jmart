@@ -1,6 +1,9 @@
 package com.GhulamJmartAK;
 
-import java.util.regex.*;/**
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
  * Write a description of class Store here.
  *
  * @author (your name)
@@ -8,44 +11,38 @@ import java.util.regex.*;/**
  */
 public class Store
 {
+    public static final String REGEX_PHONE = "^(\\d{9,12})$";
+    public static final String REGEX_NAME = "^(?=^[A-Z])(?![A-Z a-z]{20,})((?=[A-Z a-z]{4,}).)((?!\\s{2}).)*$";
+    public String name;
+    public String address;
+    public String phoneNumber;
+    public double balance;
 
-    public String name, address, phoneNumber;
-    public  static final String REGEX_NAME = "^(\\d{9,12})$";
-    public  static final String REGEX_PHONE = "^[A-Z](?!(?:.*[ ]){2}).{3,19}$";
-
-    public Store(int accountId, String name, String address, String phoneNumber){
-
+    public Store(String name, String address, String phoneNumber, double balance) {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.balance = balance;
     }
 
-    public Store(Account account, String name, String address, String phoneNumber){
-
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
+    public String toString(){
+        return "name: " + (String)this.name + "\n" + "address: " + (String)this.address + "\n" + "Phone Number" + (String)this.phoneNumber;
     }
 
-    public String toString() {
-        return "name :" + this.name + "\naddress :" + this.address +  "\nphone number :" + this.phoneNumber;
-    }
+    public boolean validate(){
+        Pattern formatNum = Pattern.compile(REGEX_PHONE);
+        Matcher cekPhone = formatNum.matcher(phoneNumber);
+        boolean matchPhone = cekPhone.find();
 
-    public boolean validate() {
-        Pattern patternPhone = Pattern.compile(REGEX_PHONE);
-        Matcher matcherPhone = patternPhone.matcher(phoneNumber);
-        boolean matchPhone = matcherPhone.find();
-        boolean hasilPhone = matchPhone ? true : false;
+        Pattern formatName = Pattern.compile(REGEX_NAME);
+        Matcher cekName = formatName.matcher(name);
+        boolean matchName = cekName.find();
 
-        Pattern patternName = Pattern.compile(REGEX_NAME);
-        Matcher matcherName = patternName.matcher(name);
-        boolean matchName = matcherName.find();
-        boolean hasilName = matchName ? true : false;
-
-        if (hasilPhone == true && hasilName == true){
+        if(matchName == true && matchPhone == true) {
             return true;
         }
-        else
+        else {
             return false;
+        }
     }
 }
