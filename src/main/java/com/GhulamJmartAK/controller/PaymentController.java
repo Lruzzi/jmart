@@ -105,7 +105,7 @@ public class PaymentController implements BasicGetController<Payment> {
         return false;
     }
 
-    private static boolean timekeeper(Payment payment){
+    private static boolean timekeeper(Payment payment) {
         Payment.Record record = payment.history.get(payment.history.size() - 1);
         long elapsed = System.currentTimeMillis() - record.date.getTime();
         if (record.status.equals(Invoice.Status.WAITING_CONFIRMATION) && (elapsed > WAITING_CONF_LIMIT_MS)) {
