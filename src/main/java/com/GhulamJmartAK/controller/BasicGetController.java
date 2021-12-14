@@ -1,16 +1,15 @@
 package com.GhulamJmartAK.controller;
 
-import com.GhulamJmartAK.Algorithm;
-import com.GhulamJmartAK.dbjson.JsonTable;
-import com.GhulamJmartAK.dbjson.Serializable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.GhulamJmartAK.Algorithm;
+import com.GhulamJmartAK.dbjson.*;
 
 @RestController
 public interface BasicGetController <T extends Serializable> {
+
     @GetMapping("/{id}")
     public default T getById (@PathVariable int id){
         return Algorithm.<T>find(getJsonTable(),e -> e.id == id);

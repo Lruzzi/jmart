@@ -1,10 +1,7 @@
 package com.GhulamJmartAK;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Algorithm {
     private Algorithm() {
@@ -70,32 +67,57 @@ public class Algorithm {
     }
 
     public static <T> T find(T[] array, T value) {
-        final Iterator<T> var = Arrays.stream(array).iterator();
-        return find(var, value);
+        for(T i : array){
+            if(i == value){
+                return i;
+            }
+        }
+        return null;
     }
 
     public static <T> T find(Iterable<T> iterable, T value) {
-        final Iterator <T> var = iterable.iterator();
-        return find(var, value);
+        for(T i : iterable){
+            if(i == value){
+                return i;
+            }
+        }
+        return null;
     }
 
     public static <T> T find(Iterator<T> iterator, T value) {
-        final Predicate <T> var = value::equals;
-        return find(iterator, var);
+        while (iterator.hasNext()){
+            if(iterator.next() == value){
+                return iterator.next();
+            }
+        }
+        return null;
     }
 
     public static <T> T find(T[] array, Predicate<T> pred) {
-        final Iterator<T> var = Arrays.stream(array).iterator();
-        return find(var, pred);
+        for(T i : array){
+            if(pred.predicate(i)){
+                return i;
+            }
+        }
+        return null;
     }
 
     public static <T> T find(Iterable<T> iterable, Predicate<T> pred) {
-        final Iterator <T> var = iterable.iterator();
-        return find(var, pred);
+        for(T i : iterable){
+            if(pred.predicate(i)){
+                return i;
+            }
+        }
+        return null;
     }
 
     public static <T> T find(Iterator<T> iterator, Predicate<T> pred) {
-        return find(iterator, pred);
+        while (iterator.hasNext()){
+            if(pred.predicate(iterator.next())){
+                return iterator.next();
+            }
+        }
+        return null;
     }
 
     public static <T extends Comparable<? super T>> T max(T first, T  second) {
@@ -188,7 +210,7 @@ public class Algorithm {
         T maximum = null;
         while(iterator.hasNext()) {
             if(comparator.compare(iterator.next(), maximum)>= 0) {
-
+                maximum = iterator.next();
             }
         }
         return maximum;
@@ -282,7 +304,7 @@ public class Algorithm {
         T minimum = null;
         while(iterator.hasNext()) {
             if(comparator.compare(iterator.next(), minimum)>= 0) {
-
+                minimum = iterator.next();
             }
         }
         return minimum;
@@ -351,55 +373,49 @@ public class Algorithm {
         return list;
     }
 
-    public static<T> List<T> paginate (T[] array, int page, int pageSize, Predicate<T> pred){
-        List<T> tempHasil = new ArrayList<T>();
-
-        if (pred.equals(true)){
-            for(int i = ((array.length / pageSize) * page); i < ((array.length / pageSize) * page) + pageSize; i++){
-                tempHasil.add(array[i]);
-            }
-        }
-        return tempHasil;
+    public static <T> List<T> paginate(T[] array, int page, int pageSize, Predicate<T> pred){
+        return Arrays.stream(array).filter(pred::predicate).skip(pageSize*page).limit(pageSize).collect(Collectors.toList());
     }
 
-    public static<T> List<T> paginate (Iterable<T> iterable, int page, int pageSize, Predicate<T> pred) {
-        List<T> tempHasil = new ArrayList<T>();
-        int iterableSize = 0;
-        for (Object i : iterable) {
-            iterableSize++;
-        }
-
-        int start = (iterableSize / pageSize) * page;
-        int finish = start + pageSize;
-        int counter = 0;
-
-        for (T each: iterable) {
-            if (counter >= start && counter < finish) {
-                tempHasil.add(each);
+    public static <T> List<T> paginate(Iterable<T> iterable, int page, int pageSize, Predicate<T> pred){
+        List<T> list = new ArrayList<T>();
+        int counter = 0, counterPrint = 0;
+        int size = pageSize * page;
+        for (T each : iterable){
+            if (counter < size && pred.predicate(each)){
+                counter++;
+                continue;
             }
-            counter++;
+            if (counterPrint < pageSize && pred.predicate(each)){
+                list.add(each);
+                counterPrint++;
+            }else{
+                break;
+            }
         }
-        return tempHasil;
+        return list;
     }
 
-    public static<T> List<T> paginate (Iterator<T> iterator, int page, int pageSize, Predicate<T> pred) {
-        List<T> tempHasil = new ArrayList<T>();
-        int iteratorSize = 0;
-        while (iterator.hasNext()) {
-            iteratorSize++;
-            iterator.next();
-        }
-        int start = (iteratorSize / pageSize) * page;
-        int finish = start + pageSize;
-        int counter = 0;
+    public static <T> List<T> paginate(Iterator<T> iterator, int page, int pageSize, Predicate<T> pred) {
+        int iteration = 0;
+        int occurences = 0;
+        int startingIdx = page * pageSize;
+        List<T> pageList = new ArrayList<>(pageSize);
 
-        while (iterator.hasNext()) {
-            if(counter >= start && counter < finish){
-                T each = iterator.next();
-                tempHasil.add(each);
+        List<T> array = new ArrayList<T>();
+
+        iterator.forEachRemaining(array::add);
+
+        for (; iteration < array.size() && occurences < startingIdx; ++iteration) {
+            if (pred.predicate(array.get(iteration))) {
+                ++occurences;
             }
-            counter++;
         }
-        return tempHasil;
+        for (int i = 0; i < array.size() && pageList.size() < pageSize; ++i) {
+            if (pred.predicate(array.get(iteration))) {
+                pageList.add(array.get(iteration));
+            }
+        }
+        return pageList;
     }
 }

@@ -2,17 +2,17 @@ package com.GhulamJmartAK.controller;
 
 import com.GhulamJmartAK.*;
 import com.GhulamJmartAK.dbjson.JsonAutowired;
-import com.GhulamJmartAK.dbjson.JsonDBEngine;
 import com.GhulamJmartAK.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.sampled.Port;
-import java.util.List;;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
-public class ProductController implements BasicGetController<Product> {
-    @JsonAutowired(value = Product.class, filepath = "product.json")
+public class ProductController implements BasicGetController<Product>
+{
+    @JsonAutowired(value = Product.class,filepath = "Product.json")
     public static JsonTable<Product> productTable;
 
     @Override
@@ -27,12 +27,12 @@ public class ProductController implements BasicGetController<Product> {
                     @RequestParam int id,
                     @RequestParam int page,
                     @RequestParam int pageSize
-            ) {
+            )
+    {
         return Algorithm.paginate(productTable, page, pageSize,pred->pred.accountId == id);
     }
 
     @PostMapping("/create")
-    @ResponseBody
     Product create
             (
                     @RequestParam int accountId,
@@ -45,8 +45,8 @@ public class ProductController implements BasicGetController<Product> {
                     @RequestParam byte shipmentPlans
             )
     {
-        for(Product each : productTable) {
-            if (each.accountId == accountId){
+        for(Account each : AccountController.accountTable) {
+            if (each.id == accountId && each.store != null){
                 Product product =  new Product(accountId, name, weight, conditionUsed, price, discount, category, shipmentPlans);
                 productTable.add(product);
                 return product;
@@ -68,7 +68,7 @@ public class ProductController implements BasicGetController<Product> {
                     @RequestParam ProductCategory category
             )
     {
-        List<Product> tempProduct = null;
+        List<Product> tempProduct = new ArrayList<Product>();
         for (Product each : productTable) {
             if (each.accountId == accountId)
                 if (each.name.contains(search))
@@ -78,15 +78,5 @@ public class ProductController implements BasicGetController<Product> {
                                 tempProduct.add(each);
         }
         return tempProduct;
-    }
-
-    @Override
-    public List getPage(int page, int pageSize) {
-        return BasicGetController.super.getPage(page, pageSize);
-    }
-
-    @Override
-    public Product getById(int id) {
-        return BasicGetController.super.getById(id);
     }
 }
