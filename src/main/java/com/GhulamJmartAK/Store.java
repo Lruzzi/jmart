@@ -4,10 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Write a description of class Store here.
+ * Class untuk data toko setiap akun
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ghulam Izzul Fuad
  */
 public class Store
 {

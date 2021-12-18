@@ -4,11 +4,9 @@ import com.GhulamJmartAK.dbjson.Serializable;
 import java.util.Date;
 
 /**
- * Write a description of class Invoice here.
+ * Class untuk data Invoice pembelian product
  *
- * @author @ghulamif8
- * @abrahamkristanto
- * @version (a version number or a date)
+ * @author Ghulam Izzul Fuad
  */
 public abstract class Invoice extends Serializable
 {

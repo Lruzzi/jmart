@@ -1,5 +1,10 @@
 package com.GhulamJmartAK.controller;
 
+/**
+ * Class yang berfungsi untuk generic get data menggunakan Id dan get data dengan page atau halaman
+ * @author Ghulam Izzul Fuad
+ */
+
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +17,7 @@ public interface BasicGetController <T extends Serializable> {
 
     @GetMapping("/{id}")
     public default T getById (@PathVariable int id){
+
         return Algorithm.<T>find(getJsonTable(),e -> e.id == id);
     }
 

@@ -1,4 +1,7 @@
 package com.GhulamJmartAK;
+/**
+ * Class yang berguna menyimpan algiritma
+ */
 
 import java.util.*;
 import java.util.stream.Collectors;

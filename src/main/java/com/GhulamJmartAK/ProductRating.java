@@ -2,10 +2,9 @@ package com.GhulamJmartAK;
 
 
 /**
- * Write a description of class ProductRating here.
+ * Class untuk mengatur rating product
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ghulam Izzul Fuad
  */
 public class ProductRating
 {

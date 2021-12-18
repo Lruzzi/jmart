@@ -2,10 +2,9 @@ package com.GhulamJmartAK;
 
 
 /**
- * Write a description of class ProductCategory here.
+ * Class yang mengandung enumeration kategori produk
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ghulam Izzul Fuad
  */
 public enum ProductCategory
 {
@@ -14,6 +13,7 @@ public enum ProductCategory
         ELECTRONIC,
         FASHION,
         GAMING,
+        GADGET,
         MOTHERCARE,
         COSMETICS,
         HEALTHCARE,

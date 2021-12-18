@@ -1,5 +1,10 @@
 package com.GhulamJmartAK;
 
+/**
+ * Class untuk multithreading
+ * @author Ghulam Izzul Fuad
+ */
+
 import java.util.function.Function;
 import java.util.Vector;
 

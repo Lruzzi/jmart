@@ -4,10 +4,9 @@ package com.GhulamJmartAK;
 import com.GhulamJmartAK.dbjson.Serializable;
 
 /**
- * Write a description of class Product here.
+ * Class untuk data product yang ada di sistem
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ghulam Izzul Fuad
  */
 public class Product extends Serializable
 {

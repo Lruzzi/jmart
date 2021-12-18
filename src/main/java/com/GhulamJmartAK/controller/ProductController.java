@@ -1,5 +1,10 @@
 package com.GhulamJmartAK.controller;
 
+/**
+ * Class yang digunakan untuk pengolahan data product
+ * seperti create product, filter, dan pengambilan data product yang terdaftar dari sebuah toko
+ */
+
 import com.GhulamJmartAK.*;
 import com.GhulamJmartAK.dbjson.JsonAutowired;
 import com.GhulamJmartAK.dbjson.JsonTable;
@@ -57,26 +62,18 @@ public class ProductController implements BasicGetController<Product>
 
     @GetMapping("/getFiltered")
     @ResponseBody
-    List<Product> getProductByFilter
-            (
-                    @RequestParam int page,
-                    @RequestParam int pageSize,
-                    @RequestParam int accountId,
-                    @RequestParam String search,
-                    @RequestParam int minPrice,
-                    @RequestParam int maxPrice,
-                    @RequestParam ProductCategory category
-            )
-    {
+    List<Product> getProductByFilter(@RequestParam int page, @RequestParam int pageSize, @RequestParam String search,
+                                     @RequestParam int minPrice, @RequestParam int maxPrice, @RequestParam ProductCategory category,
+                                     @RequestParam boolean conditionUsed) {
         List<Product> tempProduct = new ArrayList<Product>();
-        for (Product each : productTable) {
-            if (each.accountId == accountId)
-                if (each.name.contains(search))
-                    if (minPrice <= each.price)
-                        if (maxPrice >= each.price)
-                            if (each.category == category)
-                                tempProduct.add(each);
+        for (Product iterate : productTable) {
+            if (iterate.name.contains(search))
+                if (minPrice <= iterate.price)
+                    if (maxPrice >= iterate.price)
+                        if (iterate.category == category)
+                            if (iterate.conditionUsed == conditionUsed)
+                                tempProduct.add(iterate);
         }
-        return tempProduct;
+        return Algorithm.paginate(tempProduct, page, pageSize, pred -> pred.weight != 0);
     }
 }

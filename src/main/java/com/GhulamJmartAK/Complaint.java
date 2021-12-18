@@ -6,10 +6,9 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 /**
- * Write a description of class Complaint here.
+ * Class yang berguna untuk data complaint
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ghulam Izzul Fuad
  */
 public class Complaint extends Serializable
 {

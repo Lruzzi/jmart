@@ -1,10 +1,14 @@
 package com.GhulamJmartAK;
 
+/**
+ * Class yang digunakan untuk data akun seperti
+ * nama, email, password, balance, dan store
+ * @author Ghulam Izzul Fuad
+ */
+
 import com.GhulamJmartAK.dbjson.Serializable;
 
 import java.util.regex.*;
-
-
 
 public class Account extends Serializable
 {

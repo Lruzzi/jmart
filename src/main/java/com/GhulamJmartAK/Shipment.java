@@ -5,10 +5,9 @@ import java.util.Date;
 import java.util.Calendar;
 
 /**
- * Write a description of class Shipment here.
+ * Class untuk menyimpan tipe pengiriman dalam bentuk byte
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ghulam Izzul Fuad
  */
 public class Shipment
 {

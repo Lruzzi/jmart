@@ -1,15 +1,13 @@
 package com.GhulamJmartAK;
 
 import com.GhulamJmartAK.dbjson.JsonDBEngine;
-import com.GhulamJmartAK.dbjson.JsonTable;
-import com.google.gson.Gson;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
- * Write a description of class Jmart here.
+ * Class Utama yang berisi semua class yang akan dijalankan
  *
- * @author (Ghulam)
- * @version (9/11/2021)
+ * @author (Ghulam Izzul Fuad)
+ *
  */
 @SpringBootApplication
 public class Jmart

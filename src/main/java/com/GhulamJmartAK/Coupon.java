@@ -4,10 +4,9 @@ package com.GhulamJmartAK;
 import com.GhulamJmartAK.dbjson.Serializable;
 
 /**
- * Write a description of class Coupon here.
+ * Class yang digunakan untuk data coupon
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ghulam Izzul Fuad
  */
 public class Coupon extends Serializable {
     public final int code;

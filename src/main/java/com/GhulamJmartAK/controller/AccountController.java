@@ -1,4 +1,9 @@
 package com.GhulamJmartAK.controller;
+/**
+ * Class yang berfungsi untuk melakukan pengolahan data Akun pengguna
+ * seoertu login, register, registerStore, dan top up
+ * @author Ghulam Izzul Fuad
+ */
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

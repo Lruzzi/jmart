@@ -2,10 +2,9 @@ package com.GhulamJmartAK;
 
 
 /**
- * Write a description of class PriceTag here.
+ * Class yang digunakan untuk mengatur harga dari product
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Ghulam Izzul Fuad
  */
 public class Treasury
 {

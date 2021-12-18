@@ -1,5 +1,10 @@
 package com.GhulamJmartAK.controller;
 
+/**
+ * Class yang dihunakan untuk melakukan pengolahan data kupon diskon dari yang ditawarkan toko
+ * @author Ghulam Izzul Fuad
+ */
+
 import com.GhulamJmartAK.Algorithm;
 import com.GhulamJmartAK.Coupon;
 import com.GhulamJmartAK.dbjson.JsonAutowired;
