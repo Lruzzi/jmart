@@ -21,8 +21,10 @@ import com.GhulamJmartAK.dbjson.*;
 public class AccountController implements BasicGetController<Account> {
     public static final String REGEX_EMAIL = "^\\w+([\\.&`~-]?\\w+)*@\\w+([\\.-]?\\w+)+$";
     public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d][^-\\s]{7,}$";
+    public static final String REGEX_PHONE = "^(\\d{9,12})$";
     public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
     public static final Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
+    public static final Pattern REGEX_PATTERN_PHONE = Pattern.compile(REGEX_PHONE);
     @JsonAutowired(value = Account.class, filepath = "Akun.json")
     public static JsonTable<Account> accountTable;
 
@@ -78,11 +80,14 @@ public class AccountController implements BasicGetController<Account> {
     @PostMapping("/{id}/registerStore")
     Store register(@RequestParam int id, @RequestParam String name, @RequestParam String address,
                    @RequestParam String phoneNumber) {
+        boolean hasilPhone = REGEX_PATTERN_PHONE.matcher(phoneNumber).find();
         for (Account data : accountTable) {
-            if (data.store == null && data.id == id) {
-                data.store = new Store(name, address, phoneNumber, 0);
-                return data.store;
-            }
+
+                if (data.store == null && data.id == id && hasilPhone) {
+                    data.store = new Store(name, address, phoneNumber, 0);
+                    return data.store;
+                }
+
         }
         return null;
     }

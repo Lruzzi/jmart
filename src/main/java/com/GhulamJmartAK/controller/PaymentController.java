@@ -17,7 +17,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/payment")
 public class PaymentController implements BasicGetController<Payment> {
-
     public static final long DELIVERED_LIMIT_MS = 0;
     public static final long ON_DELIVERIY_LIMIT_MS = 0;
     public static final long ON_PROGRESS_LIMIT_MS = 0;
@@ -89,13 +88,12 @@ public class PaymentController implements BasicGetController<Payment> {
         Account account1 = Algorithm.<Account>find(AccountController.accountTable,e -> e.id == buyerId);
         if(product1 != null && account1 != null ){
             Payment payment = new Payment(buyerId,productId,productCount,new Shipment(shipmentAddress,0,shipmentPlan,null));
+            if(product1.accountId == account1.id) {
+                return null;
+            }
             if(payment.getTotalPay(product1) > account1.balance){
                 return null;
-            }
-            if (product1.accountId == account1.id){
-                return null;
-            }
-            else {
+            }else {
                 account1.balance -= payment.getTotalPay(product1);
                 payment.history.add(new Payment.Record(Invoice.Status.WAITING_CONFIRMATION," "));
                 paymentTable.add(payment);
